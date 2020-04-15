@@ -40,6 +40,7 @@ data_load_get_server <- list(
 )
 
 main <- function() {
+  ttl_mode <- FALSE
   get_server_response_raw <- POST(url_get_server,
                                   body   = data_load_get_server,
                                   encode = "form")
@@ -97,11 +98,11 @@ main <- function() {
         if (event_where == 51) {
           ttl_mode <- TRUE
         } else if (update[[4]] >= 2e9) {
-          if (update[[7]][["from"]] == "490832562") {
-            ttl_mode <- TRUE
+            if (update[[7]][["from"]] == "490832562") {
+              ttl_mode <- TRUE
           }
         } else {
-          ttl_mode <- FALSE
+            ttl_mode <- FALSE
         }
         if (ttl_mode == TRUE) {
           message_text <- update[[6]]
@@ -115,8 +116,8 @@ main <- function() {
                                           perl = TRUE))
               start_message <- 4 + nchar(delay)
             } else {
-              delay <- 10
-              start_message <- 4
+                delay <- 10
+                start_message <- 4
             }
             send_mesage_to(peer_id,
                            substr(message_text,
@@ -125,6 +126,8 @@ main <- function() {
                            message_id,
                            delay)
           }
+        } else {
+            next
         }
       }
     }
